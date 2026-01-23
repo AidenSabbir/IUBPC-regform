@@ -1,0 +1,115 @@
+import { google } from 'googleapis';
+
+// Cached auth client for performance
+let authClient: any = null;
+
+async function getAuthClient() {
+  if (authClient) return authClient;
+  
+  authClient = new google.auth.GoogleAuth({
+    credentials: {
+      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    },
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+  
+  return authClient;
+}
+
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function checkDuplicateStudentId(studentId: string): Promise<boolean> {
+  const MAX_RETRIES = 3;
+  let lastError: any;
+
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const auth = await getAuthClient();
+      const sheets = google.sheets({ version: 'v4', auth });
+      
+      // Fetch only column C (Student ID) - much faster than reading entire sheet
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: 'Sheet1!C:C', // Column C contains Student IDs
+      });
+
+      const values = response.data.values || [];
+      
+      // Skip header row (index 0) and check if studentId exists
+      // values[0] = "Student ID" (header), values[1+] = actual student IDs
+      const existingIds = values.slice(1).map(row => row[0]?.toString().trim());
+      
+      return existingIds.includes(studentId.trim());
+      
+    } catch (error: any) {
+      lastError = error;
+      
+      const isRetryable = 
+        error.code === 429 || 
+        error.code === 'RATE_LIMIT_EXCEEDED' ||
+        (error.code >= 500 && error.code < 600) ||
+        (error.errors && error.errors[0]?.reason === 'rateLimitExceeded');
+      
+      if (!isRetryable || attempt === MAX_RETRIES - 1) {
+        console.error(`Error checking duplicate (Attempt ${attempt + 1}/${MAX_RETRIES}):`, error);
+        throw error;
+      }
+      
+      const delayMs = Math.pow(2, attempt) * 1000;
+      console.log(`Retry duplicate check ${attempt + 1} after ${delayMs}ms`);
+      await sleep(delayMs);
+    }
+  }
+  
+  throw lastError;
+}
+
+export async function appendToSheet(data: any) {
+  const MAX_RETRIES = 3;
+  let lastError: any;
+
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const auth = await getAuthClient();
+      const sheets = google.sheets({ version: 'v4', auth });
+      
+      const response = await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: 'Sheet1!A1',
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+          values: [data],
+        },
+      });
+
+      return response.data; // Success!
+      
+    } catch (error: any) {
+      lastError = error;
+      
+      // Check if it's a rate limit error (429) or server error (5xx)
+      const isRetryable = 
+        error.code === 429 || 
+        error.code === 'RATE_LIMIT_EXCEEDED' ||
+        (error.code >= 500 && error.code < 600) ||
+        // Sometimes googleapis error structure is different
+        (error.errors && error.errors[0]?.reason === 'rateLimitExceeded');
+      
+      if (!isRetryable || attempt === MAX_RETRIES - 1) {
+        // Don't retry for non-retryable errors or if last attempt
+        console.error(`Error appending to sheet (Attempt ${attempt + 1}/${MAX_RETRIES}):`, error);
+        throw error;
+      }
+      
+      // Exponential backoff: 1s, 2s, 4s
+      const delayMs = Math.pow(2, attempt) * 1000;
+      console.log(`Retry attempt ${attempt + 1} after ${delayMs}ms due to error:`, error.message);
+      await sleep(delayMs);
+    }
+  }
+  
+  throw lastError;
+}

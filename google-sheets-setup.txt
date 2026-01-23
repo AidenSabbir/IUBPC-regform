@@ -1,0 +1,76 @@
+==========================================
+IUBPC REGISTRATION FORM - GOOGLE SHEETS SETUP
+==========================================
+
+Follow these steps to connect your registration form to a Google Sheet.
+
+STEP 1: CREATE A GOOGLE CLOUD PROJECT
+-------------------------------------
+1. Go to Google Cloud Console: https://console.cloud.google.com/
+2. Click "Select a project" > "New Project"
+3. Name it "IUBPC Registration" and create it.
+
+STEP 2: ENABLE GOOGLE SHEETS API
+--------------------------------
+1. In the sidebar, go to "APIs & Services" > "Library"
+2. Search for "Google Sheets API"
+3. Click on it and click "Enable"
+
+STEP 3: CREATE SERVICE ACCOUNT
+------------------------------
+1. Go to "APIs & Services" > "Credentials"
+2. Click "Create Credentials" > "Service Account"
+3. Name: "iubpc-sheets-bot" (or similar)
+4. Click "Create and Continue"
+5. Role: Select "Editor" (or Owner)
+6. Click "Done"
+
+STEP 4: GET CREDENTIALS
+-----------------------
+1. Click on the newly created service account (email address link)
+2. Go to the "Keys" tab
+3. Click "Add Key" > "Create new key"
+4. Select "JSON" and click "Create"
+5. A file will download. OPEN IT.
+
+STEP 5: CONFIGURE ENVIRONMENT VARIABLES
+---------------------------------------
+1. Open the downloaded JSON file in a text editor.
+2. Create a file named `.env.local` in your project root (if not exists).
+3. Add the following lines, copying values from the JSON file:
+
+GOOGLE_SHEETS_CLIENT_EMAIL="client_email_from_json"
+GOOGLE_SHEETS_PRIVATE_KEY="private_key_from_json"
+
+(Make sure to copy the entire private key including -----BEGIN PRIVATE KEY-----)
+
+STEP 6: CREATE GOOGLE SHEET
+---------------------------
+1. Go to https://sheets.google.com
+2. Create a new blank spreadsheet named "IUBPC Registrations"
+3. In the URL, copy the ID between /d/ and /edit
+   Example: docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+   The ID is: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
+
+4. Add this ID to your `.env.local` file:
+
+GOOGLE_SHEET_ID="your_sheet_id_here"
+
+STEP 7: SHARE SHEET WITH BOT
+----------------------------
+1. In your Google Sheet, click the "Share" button (top right).
+2. Copy the `client_email` from your JSON file (e.g., iubpc-sheets-bot@iubpc-reg.iam.gserviceaccount.com).
+3. Paste it into the "Add people" box.
+4. Ensure "Editor" permission is selected.
+5. Click "Send" (uncheck "Notify people" if you want).
+
+STEP 8: ADD HEADERS (OPTIONAL BUT RECOMMENDED)
+----------------------------------------------
+Add these headers to Row 1 of your sheet:
+Timestamp | Gender | Student ID | Name | Email | Phone | Major | Department | Skills
+
+==========================================
+TESTING
+==========================================
+Restart your Next.js server (`npm run dev`) to load the new .env.local variables.
+Fill out the form and submit. Check the sheet for new rows!

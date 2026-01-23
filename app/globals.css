@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  /* Pixel Art Game Colors */
+  --pixel-purple: #4A3F8C;
+  --pixel-magenta: #FF3FB4;
+  --pixel-orange: #FF8B4C;
+  --pixel-pink: #FF69B4;
+
+  /* UI Colors */
+  --pixel-white: #FFFFFF;
+  --pixel-black: #1A1A2E;
+  --pixel-green: #00FF00;
+  --pixel-cyan: #00FFFF;
+
+  /* Button States */
+  --pixel-button-primary: #00FF00;
+  --pixel-button-hover: #00FFFF;
+  --pixel-button-disabled: #666666;
+
+  /* Input States */
+  --pixel-input-bg: rgba(26, 26, 46, 0.8);
+  --pixel-input-border: #00FF00;
+  --pixel-input-focus: #00FFFF;
+  --pixel-input-error: #FF0000;
+
+  /* Selection/Active State */
+  --pixel-selected: #00FFFF;
+  --pixel-glow: rgba(0, 255, 255, 0.5);
+
+  --font-pixelify: "Pixelify Sans", sans-serif;
+  /* Fallback if var not set */
+}
+
+@theme inline {
+  --color-pixel-purple: var(--pixel-purple);
+  --color-pixel-magenta: var(--pixel-magenta);
+  --color-pixel-orange: var(--pixel-orange);
+  --color-pixel-pink: var(--pixel-pink);
+  --color-pixel-white: var(--pixel-white);
+  --color-pixel-black: var(--pixel-black);
+  --color-pixel-green: var(--pixel-green);
+  --color-pixel-cyan: var(--pixel-cyan);
+
+  --font-sans: var(--font-pixelify);
+}
+
+body {
+  color: var(--pixel-white);
+  font-family: var(--font-pixelify);
+  image-rendering: pixelated;
+}
+
+/* Force font on everything to be safe */
+* {
+  font-family: var(--font-pixelify);
+}
+
+/* Custom Pixel Art Utilities */
+.pixel-border {
+  border: 4px solid var(--pixel-white);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.pixel-card {
+  image-rendering: pixelated;
+  transition: all 0.2s ease-in-out;
+}
+
+.pixel-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.1);
+}
+
+.pixel-shadow {
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations Removed */
+
+.selected {
+  border: 4px solid var(--pixel-cyan);
+  transform: scale(1.05);
+}
+
+/* Retro Inputs */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8em;
+}
+
+/* Hide scrollbar for cleaner look but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
