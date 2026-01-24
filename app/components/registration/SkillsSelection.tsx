@@ -129,18 +129,18 @@ const SkillsSelection: React.FC<FormStepProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-4xl mx-auto z-10">
-      <h2 className="text-xl md:text-2xl text-[#00FFFF] mb-4 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+      <h2 className="text-xl text-[#00FFFF] mb-4 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
         SELECT YOUR SKILL
       </h2>
 
-      <p className="text-[#00FFFF] text-xs md:text-sm text-center mb-8 font-bold">
+      <p className="text-[#00FFFF] text-xs text-center mb-8 font-bold">
         YOU MAY SELECT MULTIPLE
       </p>
 
       {/* Skills Circular Container */}
       <div
         ref={containerRef}
-        className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] mb-8 cursor-grab active:cursor-grabbing touch-none"
+        className="relative w-[300px] h-[300px] mb-8 cursor-grab active:cursor-grabbing touch-none"
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -190,13 +190,13 @@ const SkillsSelection: React.FC<FormStepProps> = ({
               }}
               className={`
                   absolute cursor-pointer flex flex-col items-center gap-0
-                  w-[100px] md:w-[120px] z-10
+                  w-[100px] z-10
                   select-none
                   ${isSelected ? 'scale-110 z-20' : 'opacity-80 hover:opacity-100 hover:scale-105'}
                 `}
             >
               <div className={`
-            relative w-[90px] h-[90px] md:w-[110px] md:h-[110px] 
+            relative w-[90px] h-[90px] 
             transition-all duration-200
             ${isSelected ? 'drop-shadow-[0_0_15px_#00FFFF] rounded-full' : ''}
           `}>
@@ -208,7 +208,7 @@ const SkillsSelection: React.FC<FormStepProps> = ({
                 />
               </div>
               <span className={`
-            text-xs md:text-sm text-center bg-black/70 px-3 py-1 rounded-full -mt-3 border border-white/10 pointer-events-none
+            text-xs text-center bg-black/70 px-3 py-1 rounded-full -mt-3 border border-white/10 pointer-events-none
             ${isSelected ? 'text-[#00FFFF] drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)] border-[#00FFFF]/50' : 'text-[#00FF00]'}
           `}>
                 {SKILL_LABELS[skill]}

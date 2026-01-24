@@ -13,11 +13,11 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ onReset }) => {
         <Image src="/levelup.png" alt="levelup Logo" width={120} height={120} />
       </div>
 
-      <h2 className="text-2xl md:text-4xl text-[#00FF00] mb-6 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)] leading-tight font-bold">
+      <h2 className="text-2xl text-[#00FF00] mb-6 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)] leading-tight font-bold">
         REGISTRATION COMPLETE!
       </h2>
       <div className="bg-[rgba(26,26,46,0.8)] border-4 border-dashed border-[#00FFFF] mb-12 w-full max-w-md flex items-center justify-center">
-        <p className="text-white text-sm md:text-base leading-relaxed font-semibold">
+        <p className="text-white text-sm leading-relaxed font-semibold">
           Welcome to the guild, adventurer! Your stats have been recorded in the archives.
         </p>
       </div>

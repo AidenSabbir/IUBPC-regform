@@ -37,7 +37,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
           </div>
         </div>
         {/* Final Character */}
-        <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px]">
+        <div className="relative w-[300px] h-[400px]">
           <Image
             src="/final.png"
             alt="Final Character"
@@ -53,7 +53,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
           {/* Portion */}
           {formData.portion && (
             <div className="flex flex-col items-center gap-1 group">
-              <div className="relative w-16 h-16 md:w-20 md:h-20 bg-black/60 rounded-lg border-2 border-[#00FFFF] shadow-[0_0_15px_rgba(0,255,255,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="relative w-16 h-16 bg-black/60 rounded-lg border-2 border-[#00FFFF] shadow-[0_0_15px_rgba(0,255,255,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
                 <Image
                   src={`/${formData.portion}.png`}
                   alt="Portion"
@@ -61,7 +61,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
                   className="object-contain"
                 />
               </div>
-              <span className="text-[10px] md:text-xs text-[#00FFFF] bg-black/70 px-2 py-0.5 rounded border border-[#00FFFF]/30">
+              <span className="text-[10px] text-[#00FFFF] bg-black/70 px-2 py-0.5 rounded border border-[#00FFFF]/30">
                 {getItemName(formData.portion)}
               </span>
             </div>
@@ -70,7 +70,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
           {/* Special Item */}
           {formData.specialItem && (
             <div className="flex flex-col items-center gap-1 group">
-              <div className="relative w-16 h-16 md:w-20 md:h-20 bg-black/60 rounded-lg border-2 border-[#FF3FB4] shadow-[0_0_15px_rgba(255,63,180,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="relative w-16 h-16 bg-black/60 rounded-lg border-2 border-[#FF3FB4] shadow-[0_0_15px_rgba(255,63,180,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
                 <Image
                   src={`/${formData.specialItem}.png`}
                   alt="Special Item"
@@ -78,7 +78,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
                   className="object-contain"
                 />
               </div>
-              <span className="text-[10px] md:text-xs text-[#FF3FB4] bg-black/70 px-2 py-0.5 rounded border border-[#FF3FB4]/30">
+              <span className="text-[10px] text-[#FF3FB4] bg-black/70 px-2 py-0.5 rounded border border-[#FF3FB4]/30">
                 {getItemName(formData.specialItem)}
               </span>
             </div>
@@ -106,7 +106,7 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
       {/* Continue Button */}
       <button
         onClick={nextStep}
-        className="mt-10 px-10 py-3 bg-[#00FF00] hover:bg-[#00CC00] text-black font-bold text-lg md:text-xl rounded-full border-4 border-black shadow-[4px_4px_0px_#000000] active:translate-y-1 active:shadow-none transition-all duration-150 flex items-center gap-2 sound-click-btn"
+        className="mt-10 px-10 py-3 bg-[#00FF00] hover:bg-[#00CC00] text-black font-bold text-lg rounded-full border-4 border-black shadow-[4px_4px_0px_#000000] active:translate-y-1 active:shadow-none transition-all duration-150 flex items-center gap-2 sound-click-btn"
       >
         COMPLETE REGISTRATION
         <span className="text-2xl pointer-events-none">→</span>

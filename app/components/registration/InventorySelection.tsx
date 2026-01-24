@@ -56,7 +56,7 @@ const InventorySelection: React.FC<FormStepProps> = ({
           : 'bg-black/40 border-white/10 hover:border-white/40 hover:bg-black/60'}
       `}
     >
-      <div className="relative w-20 h-20 md:w-24 md:h-24">
+      <div className="relative w-20 h-20">
         <Image
           src={`/${item}.png`}
           alt={getItemName(item)}
@@ -64,7 +64,7 @@ const InventorySelection: React.FC<FormStepProps> = ({
           className={`object-contain transition-all duration-300 ${isSelected ? 'drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]' : 'opacity-80'}`}
         />
       </div>
-      <span className={`text-xs md:text-sm font-bold uppercase tracking-wide ${isSelected ? 'text-[#00FFFF]' : 'text-gray-400'}`}>
+      <span className={`text-xs font-bold uppercase tracking-wide ${isSelected ? 'text-[#00FFFF]' : 'text-gray-400'}`}>
         {getItemName(item)}
       </span>
       
@@ -78,11 +78,11 @@ const InventorySelection: React.FC<FormStepProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-4xl mx-auto z-10">
-      <h2 className="text-xl md:text-2xl text-[#00FFFF] mb-6 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+      <h2 className="text-xl text-[#00FFFF] mb-6 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
         CHOOSE YOUR INVENTORY
       </h2>
 
-      <div className="flex flex-col md:flex-row gap-8 w-full justify-center items-start mb-8">
+      <div className="flex flex-col gap-8 w-full justify-center items-start mb-8">
         
         {/* Portions Section */}
         <div className="flex-1 w-full bg-black/30 p-4 rounded-xl border border-white/10">

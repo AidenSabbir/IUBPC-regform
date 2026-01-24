@@ -129,12 +129,12 @@ const RegistrationForm = () => {
   if (!isLoaded) return null; // Prevent hydration mismatch
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8 relative">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative">
 
       {/* Persistent Logo for steps > 0 */}
       {step > 0 && step < 8 && (
         <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-          <div className="relative w-10 h-10 md:w-12 md:h-12">
+          <div className="relative w-12 h-12">
             <Image
               src="/iubpc.png"
               alt="IUBPC Logo"
@@ -142,7 +142,7 @@ const RegistrationForm = () => {
               className="object-contain"
             />
           </div>
-          <span className="text-white text-[10px] md:text-xs hidden sm:block">
+          <span className="text-white text-xs">
             IUBPC
           </span>
         </div>
@@ -163,7 +163,7 @@ const RegistrationForm = () => {
 
       {/* Content Area */}
       <div className="w-full max-w-5xl z-10 flex flex-col items-center">
-        <div className="bg-transparent p-6 md:p-10 w-full max-w-2xl relative">
+        <div className="bg-transparent p-6 w-full max-w-2xl relative">
 
           <div className="relative z-10">
             {step === 0 && <StartScreen onStart={() => setStep(1)} />}

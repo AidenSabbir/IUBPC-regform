@@ -48,7 +48,7 @@ const EquipmentIcons: React.FC<EquipmentIconsProps> = ({ equipment = [], gender 
       {/* Center Character */}
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
         {gender && (
-          <div className="relative w-12 h-16 md:w-16 md:h-20">
+          <div className="relative w-12 h-16">
             <Image
               src={gender === 'female' ? '/female_v2.png' : '/male_v2.png'}
               alt="Character"

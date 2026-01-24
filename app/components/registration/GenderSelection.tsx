@@ -28,11 +28,11 @@ const GenderSelection: React.FC<FormStepProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-2xl mx-auto z-10">
-      <h2 className="text-xl md:text-2xl text-[#00FFFF] mb-8 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+      <h2 className="text-xl text-[#00FFFF] mb-8 text-center uppercase tracking-wider drop-shadow-[2px_2px_0_#000] bg-black/80 px-8 py-3 rounded-full border border-[#00FFFF]/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]">
         SELECT YOUR CHARACTER
       </h2>
 
-      <div className="flex flex-row gap-8 md:gap-16 justify-center items-end mb-12">
+      <div className="flex flex-row gap-8 justify-center items-end mb-12">
         {/* Female Character */}
         <div
           onClick={() => handleGenderSelect('female')}

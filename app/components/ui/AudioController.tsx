@@ -76,7 +76,7 @@ const AudioController: React.FC<AudioControllerProps> = ({ gameStarted }) => {
       title={isMuted ? "Unmute Sound" : "Mute Sound"}
     >
       <div className={`
-        relative w-8 h-8 md:w-10 md:h-10 
+        relative w-10 h-10 
         bg-black/40 border border-[#00FFFF]/30 rounded-full p-1.5
         hover:bg-black/60 hover:border-[#00FFFF] transition-all duration-300
         ${isMuted ? 'grayscale opacity-70' : 'drop-shadow-[0_0_5px_#00FFFF]'}
