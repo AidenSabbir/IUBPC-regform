@@ -25,7 +25,7 @@ export interface RegistrationData {
 
 export type EquipmentItem = 'armor' | 'mask' | 'sowrd' | 'sheild';
 export type PortionItem = 'Pcontrol' | 'Pimmortality' | 'Pinvisibility';
-export type SpecialItem = 'Sdragon' | 'Shat' | 'Sspellbook';
+export type SpecialItem = 'Sdragon' | 'Switch_hat' | 'Sspellbook';
 
 export type Skill = 'cp' | 'decor' | 'game_dev' | 'media' | 'pr' | 'web_dev' | 'content' | 'None';
 

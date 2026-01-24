@@ -4,7 +4,7 @@ import { FormStepProps, PortionItem, SpecialItem } from '@/app/types/registratio
 import NavigationButtons from '../ui/NavigationButtons';
 
 const PORTIONS: PortionItem[] = ['Pcontrol', 'Pimmortality', 'Pinvisibility'];
-const SPECIAL_ITEMS: SpecialItem[] = ['Sdragon', 'Shat', 'Sspellbook'];
+const SPECIAL_ITEMS: SpecialItem[] = ['Sdragon', 'Switch_hat', 'Sspellbook'];
 
 const InventorySelection: React.FC<FormStepProps> = ({
   formData,
@@ -87,7 +87,7 @@ const InventorySelection: React.FC<FormStepProps> = ({
         {/* Portions Section */}
         <div className="flex-1 w-full bg-black/30 p-4 rounded-xl border border-white/10">
           <h3 className="text-[#FF3FB4] text-center mb-4 uppercase tracking-widest text-sm border-b border-[#FF3FB4]/30 pb-2">
-            Select Portion (1)
+            Select Potion (1)
           </h3>
           <div className="flex  flex-wrap justify-center gap-4 ">
             {PORTIONS.map((item) => (

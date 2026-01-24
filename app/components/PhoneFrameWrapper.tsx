@@ -6,6 +6,26 @@ interface PhoneFrameWrapperProps {
   children: React.ReactNode;
 }
 
+const BackgroundLayer = () => (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100lvh', // Use lvh to ignore address bar changes
+      backgroundImage: 'url(/bg.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundColor: '#050414',
+      zIndex: -1,
+      pointerEvents: 'none',
+      transform: 'translateZ(0)', // Force GPU acceleration
+      willChange: 'transform',
+    }}
+  />
+);
+
 const PhoneFrameWrapper = ({ children }: PhoneFrameWrapperProps) => {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -25,16 +45,8 @@ const PhoneFrameWrapper = ({ children }: PhoneFrameWrapperProps) => {
   // Avoid hydration mismatch by not rendering anything different on server
   if (!isMounted) {
     return (
-      <div
-        className="min-h-screen w-full"
-        style={{
-          backgroundImage: 'url(/bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          backgroundColor: '#050414'
-        }}
-      >
+      <div className="min-h-screen w-full relative">
+        <BackgroundLayer />
         {children}
       </div>
     );
@@ -42,32 +54,17 @@ const PhoneFrameWrapper = ({ children }: PhoneFrameWrapperProps) => {
 
   if (!isDesktop) {
     return (
-      <main
-        className="min-h-screen w-full overflow-x-hidden flex flex-col items-center"
-        style={{
-          backgroundImage: 'url(/bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          backgroundColor: '#050414'
-        }}
-      >
+      <main className="min-h-screen w-full overflow-x-hidden flex flex-col items-center relative">
+        <BackgroundLayer />
         {children}
       </main>
     );
   }
 
   return (
-    <div
-      className="min-h-screen w-full flex items-center justify-center p-4"
-      style={{
-        backgroundImage: 'url(/bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        backgroundColor: '#050414'
-      }}
-    >
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative">
+      <BackgroundLayer />
+      
       <div className="phone-frame animate-in fade-in zoom-in duration-500">
         {/* Pixel Art Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-white z-50 flex items-center justify-center rounded-b-lg">
