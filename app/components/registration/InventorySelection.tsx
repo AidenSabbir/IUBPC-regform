@@ -32,31 +32,31 @@ const InventorySelection: React.FC<FormStepProps> = ({
 
   const handleNext = () => {
     if (!formData.portion || !formData.specialItem) {
-      setError('Please select one Portion and one Special Item!');
+      setError('Please select one Potion and one Special Item!');
       return;
     }
     nextStep();
   };
 
-  const ItemCard = ({ 
-    item, 
-    isSelected, 
-    onSelect 
-  }: { 
-    item: string, 
-    isSelected: boolean, 
-    onSelect: () => void 
+  const ItemCard = ({
+    item,
+    isSelected,
+    onSelect
+  }: {
+    item: string,
+    isSelected: boolean,
+    onSelect: () => void
   }) => (
     <div
       onClick={onSelect}
       className={`
-        cursor-pointer relative flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all duration-300
-        ${isSelected 
-          ? 'bg-[#00FFFF]/20 border-[#00FFFF] scale-105 shadow-[0_0_15px_rgba(0,255,255,0.4)]' 
+        cursor-pointer w-23 relative flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all duration-300
+        ${isSelected
+          ? 'bg-[#00FFFF]/20 border-[#00FFFF] scale-105 shadow-[0_0_15px_rgba(0,255,255,0.4)]'
           : 'bg-black/40 border-white/10 hover:border-white/40 hover:bg-black/60'}
       `}
     >
-      <div className="relative w-20 h-20">
+      <div className="relative w-10 h-10">
         <Image
           src={`/${item}.png`}
           alt={getItemName(item)}
@@ -67,7 +67,7 @@ const InventorySelection: React.FC<FormStepProps> = ({
       <span className={`text-xs font-bold uppercase tracking-wide ${isSelected ? 'text-[#00FFFF]' : 'text-gray-400'}`}>
         {getItemName(item)}
       </span>
-      
+
       {/* Selection Indicator */}
       <div className={`
         absolute top-2 right-2 w-3 h-3 rounded-full border border-white/50
@@ -83,13 +83,13 @@ const InventorySelection: React.FC<FormStepProps> = ({
       </h2>
 
       <div className="flex flex-col gap-8 w-full justify-center items-start mb-8">
-        
+
         {/* Portions Section */}
         <div className="flex-1 w-full bg-black/30 p-4 rounded-xl border border-white/10">
           <h3 className="text-[#FF3FB4] text-center mb-4 uppercase tracking-widest text-sm border-b border-[#FF3FB4]/30 pb-2">
             Select Portion (1)
           </h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex  flex-wrap justify-center gap-4 ">
             {PORTIONS.map((item) => (
               <ItemCard
                 key={item}

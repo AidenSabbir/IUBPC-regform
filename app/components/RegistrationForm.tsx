@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { RegistrationData } from '@/app/types/registration';
+import SplashScreen from './registration/SplashScreen';
 import StartScreen from './registration/StartScreen';
 import GenderSelection from './registration/GenderSelection';
+
 import PersonalInfo from './registration/PersonalInfo';
 import AcademicInfo from './registration/AcademicInfo';
 import SkillsSelection from './registration/SkillsSelection';
@@ -34,6 +36,7 @@ const INITIAL_DATA: RegistrationData = {
 };
 
 const RegistrationForm = () => {
+  const [showSplash, setShowSplash] = useState(true);
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<RegistrationData>(INITIAL_DATA);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -128,6 +131,10 @@ const RegistrationForm = () => {
 
   if (!isLoaded) return null; // Prevent hydration mismatch
 
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative">
 
@@ -149,7 +156,7 @@ const RegistrationForm = () => {
       )}
 
       {/* Audio Controller */}
-      <AudioController gameStarted={step > 0} />
+      <AudioController gameStarted={!showSplash} />
 
       {/* Equipment Display - HIDDEN on Showcase (Step 7) */}
       {step > 0 && step < 7 && (

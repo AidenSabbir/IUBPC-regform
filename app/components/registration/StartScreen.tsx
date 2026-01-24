@@ -10,7 +10,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
   return (
     <div className="flex flex-col items-center justify-center text-center relative z-10 py-12">
       <div className="flex flex-col items-center justify-center -top-35 absolute">
-        <div className="relative w-10 h-10">
+        <div className="relative w-15 h-15">
           <Image
             src="/iubpc.png"
             alt="IUBPC Logo"
@@ -20,7 +20,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
           />
         </div>
         <h1 className="text-4xl text-white drop-shadow-[4px_4px_0_#4A3F8C]">
-          IUBPC
+          IUB PROGRAMMING CLUB
         </h1>
       </div>
 
@@ -40,4 +40,3 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
 };
 
 export default StartScreen;
-

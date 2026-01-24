@@ -53,7 +53,7 @@ const AcademicInfo: React.FC<FormStepProps> = ({
         <div className="mt-4">
           <PixelInput
             label="Semester"
-            placeholder="current semester"
+            placeholder="Which semester are you in?"
             {...register('semester')}
             error={errors.semester}
           />
