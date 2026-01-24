@@ -24,26 +24,65 @@ const PhoneFrameWrapper = ({ children }: PhoneFrameWrapperProps) => {
 
   // Avoid hydration mismatch by not rendering anything different on server
   if (!isMounted) {
-    return <div className="min-h-screen w-full">{children}</div>;
+    return (
+      <div
+        className="min-h-screen w-full"
+        style={{
+          backgroundImage: 'url(/bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          backgroundColor: '#050414'
+        }}
+      >
+        {children}
+      </div>
+    );
   }
 
   if (!isDesktop) {
     return (
-      <main className="min-h-screen w-full overflow-x-hidden flex flex-col items-center">
+      <main
+        className="min-h-screen w-full overflow-x-hidden flex flex-col items-center"
+        style={{
+          backgroundImage: 'url(/bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          backgroundColor: '#050414'
+        }}
+      >
         {children}
       </main>
     );
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4">
+    <div
+      className="min-h-screen w-full flex items-center justify-center p-4"
+      style={{
+        backgroundImage: 'url(/bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#050414'
+      }}
+    >
       <div className="phone-frame animate-in fade-in zoom-in duration-500">
         {/* Pixel Art Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-white z-50 flex items-center justify-center rounded-b-lg">
           <div className="w-12 h-1 bg-black/20 rounded-full" />
         </div>
-        
-        <div className="phone-screen no-scrollbar">
+
+        <div
+          className="phone-screen no-scrollbar"
+          style={{
+            backgroundImage: 'url(/bg.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundColor: '#050414'
+          }}
+        >
           {children}
         </div>
       </div>

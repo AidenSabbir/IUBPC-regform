@@ -10,7 +10,7 @@
   /* UI Colors */
   --pixel-white: #FFFFFF;
   --pixel-black: #1A1A2E;
-  --pixel-green: #00FF00;
+  --pixel-green: #00867b;
   --pixel-cyan: #00FFFF;
 
   /* Button States */
@@ -105,7 +105,7 @@ input::placeholder {
   max-width: 430px;
   height: 90vh;
   max-height: 932px;
-  background: #050414;
+  background: transparent;
   border: 4px solid var(--pixel-white);
   border-radius: 2rem;
   box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.5);
@@ -121,11 +121,7 @@ input::placeholder {
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  /* Ensure the background image shows up inside the frame too */
-  background-image: url('/bg.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  /* Background applied via inline styles in component */
 }
 
 /* Base mobile background when not in frame */
@@ -133,8 +129,5 @@ body {
   color: var(--pixel-white);
   font-family: var(--font-pixelify);
   image-rendering: pixelated;
-  background-image: url('/bg.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  /* Background applied via PhoneFrameWrapper component */
 }
