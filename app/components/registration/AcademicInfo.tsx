@@ -23,14 +23,16 @@ const AcademicInfo: React.FC<FormStepProps> = ({
     resolver: zodResolver(academicInfoSchema),
     defaultValues: {
       major: formData.major,
-      year: formData.year,
       semester: formData.semester
     },
     mode: 'onChange'
   });
 
   const onSubmit = (data: AcademicInfoForm) => {
-    updateFormData(data);
+    updateFormData({
+      ...data,
+      equipment: ['armor', 'mask', 'sowrd', 'sheild']
+    });
     nextStep();
   };
 
@@ -48,13 +50,7 @@ const AcademicInfo: React.FC<FormStepProps> = ({
           error={errors.major}
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <PixelInput
-            label="Year"
-            placeholder="1st,2nd,3rd,4th"
-            {...register('year')}
-            error={errors.year}
-          />
+        <div className="mt-4">
           <PixelInput
             label="Semester"
             placeholder="current semester"

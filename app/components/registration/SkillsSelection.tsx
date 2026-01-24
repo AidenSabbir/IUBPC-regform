@@ -10,6 +10,7 @@ const SKILL_LABELS: Record<Skill, string> = {
   game_dev: 'Game Dev',
   media: 'Media',
   pr: 'PR',
+  content: 'Content',
   web_dev: 'Web Dev',
   None: 'None'
 };
@@ -21,8 +22,17 @@ const SkillsSelection: React.FC<FormStepProps> = ({
   prevStep
 }) => {
   const [error, setError] = useState<string | null>(null);
+  const [rotation, setRotation] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startAngle, setStartAngle] = useState(0);
+  const [currentRotation, setCurrentRotation] = useState(0);
+
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const handleSkillToggle = (skill: Skill) => {
+    // If we were dragging, don't toggle
+    if (isDragging) return;
+
     let newSkills: string[] = [];
 
     if (skill === 'None') {
@@ -50,6 +60,56 @@ const SkillsSelection: React.FC<FormStepProps> = ({
     }
   };
 
+  // Helper to get angle from center of container to point
+  const getAngle = (clientX: number, clientY: number) => {
+    if (!containerRef.current) return 0;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    return Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    // Rotate based on scroll amount
+    setRotation(prev => prev + (e.deltaY * 0.1));
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartAngle(getAngle(e.clientX, e.clientY) - rotation);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const angle = getAngle(e.clientX, e.clientY);
+    setRotation(angle - startAngle);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    const touch = e.touches[0];
+    setStartAngle(getAngle(touch.clientX, touch.clientY) - rotation);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const angle = getAngle(touch.clientX, touch.clientY);
+    setRotation(angle - startAngle);
+  };
+
+  // Cleanup drag state if mouse leaves window
+  React.useEffect(() => {
+    const handleGlobalMouseUp = () => setIsDragging(false);
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
+  }, []);
+
   // Circular layout calculations
   // Arrange skills so 'None' is at the bottom (index 3 out of 7, if starting from top, or rotate)
   // Let's keep the ALL_SKILLS order but rotate the starting angle so None (last item) is at 90deg (bottom)
@@ -57,7 +117,7 @@ const SkillsSelection: React.FC<FormStepProps> = ({
   // Find index of 'None'
   const noneIndex = ALL_SKILLS.indexOf('None');
   const totalSkills = ALL_SKILLS.length;
-  const radius = 140;
+  // const radius = 140; // Unused variable
 
   // We want the angle for noneIndex to be 90 degrees (Math.PI/2)
   // angle = (index * (360 / total)) + startOffset
@@ -78,24 +138,60 @@ const SkillsSelection: React.FC<FormStepProps> = ({
       </p>
 
       {/* Skills Circular Container */}
-      <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] mb-8">
+      <div
+        ref={containerRef}
+        className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] mb-8 cursor-grab active:cursor-grabbing touch-none"
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseUp}
+      >
+
+        {/* Donut Background Layer */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] z-0 pointer-events-none">
+          {/* The dark track */}
+          <div className="absolute inset-0 rounded-full"
+            style={{ background: 'radial-gradient(circle, transparent 21%, rgba(0,0,0,0.8) 22%, rgba(0,0,0,0.8) 69%, transparent 70%)' }}>
+          </div>
+
+          {/* Inner Dashed Ring */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[22%] h-[22%] rounded-full border-2 border-dashed border-[#00FFFF]/30 shadow-[0_0_15px_rgba(0,255,255,0.2)]"></div>
+
+          {/* Outer Dashed Ring */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full border-2 border-dashed border-[#00FFFF]/30 shadow-[0_0_15px_rgba(0,255,255,0.2)]"></div>
+        </div>
+
         {ALL_SKILLS.map((skill, index) => {
           const isSelected = formData.skills.includes(skill);
-          const angle = (index * anglePerItem) + startOffset;
+          // Add rotation to the angle calculation
+          const angle = (index * anglePerItem) + startOffset + rotation;
           const radian = (angle * Math.PI) / 180;
+
+          // Counter-rotate the icons so they stay upright
+          // We can apply a reverse rotation to the icon container if needed, 
+          // or just let them orbit. Usually icons stay upright.
 
           return (
             <div
               key={skill}
-              onClick={() => handleSkillToggle(skill)}
+              // Prevent click triggering immediately after drag
+              onClick={(e) => {
+                // If we moved significantly, don't click
+                handleSkillToggle(skill);
+              }}
               style={{
                 left: `${50 + (40 * Math.cos(radian))}%`,
                 top: `${50 + (40 * Math.sin(radian))}%`,
                 transform: 'translate(-50%, -50%)'
               }}
               className={`
-                  absolute cursor-pointer flex flex-col items-center gap-1
+                  absolute cursor-pointer flex flex-col items-center gap-0
                   w-[100px] md:w-[120px] z-10
+                  select-none
                   ${isSelected ? 'scale-110 z-20' : 'opacity-80 hover:opacity-100 hover:scale-105'}
                 `}
             >
@@ -108,11 +204,11 @@ const SkillsSelection: React.FC<FormStepProps> = ({
                   src={`/${skill}.png`}
                   alt={SKILL_LABELS[skill]}
                   fill
-                  className="object-contain pixel-card"
+                  className="object-contain pixel-card pointer-events-none"
                 />
               </div>
               <span className={`
-            text-xs md:text-sm text-center bg-black/70 px-3 py-1 rounded-full mt-1 border border-white/10
+            text-xs md:text-sm text-center bg-black/70 px-3 py-1 rounded-full -mt-3 border border-white/10 pointer-events-none
             ${isSelected ? 'text-[#00FFFF] drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)] border-[#00FFFF]/50' : 'text-[#00FF00]'}
           `}>
                 {SKILL_LABELS[skill]}
@@ -122,7 +218,7 @@ const SkillsSelection: React.FC<FormStepProps> = ({
         })}
 
         {/* Center decoration or info text */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-50 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-50 pointer-events-none select-none">
           <p className="text-sm text-gray-500 uppercase tracking-widest">Choose</p>
         </div>
       </div>

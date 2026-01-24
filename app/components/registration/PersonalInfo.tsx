@@ -33,7 +33,10 @@ const PersonalInfo: React.FC<FormStepProps> = ({
   });
 
   const onSubmit = (data: PersonalInfoForm) => {
-    updateFormData(data);
+    updateFormData({
+      ...data,
+      equipment: ['armor', 'mask']
+    });
     nextStep();
   };
 

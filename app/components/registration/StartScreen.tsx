@@ -29,7 +29,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
           Registration Form
         </p>
         <PixelButton
-          className="animate-pulse"
+          className="animate-pulse start-game-btn"
           onClick={onStart}
         >
           START GAME

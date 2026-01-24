@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Prepare row for Google Sheet
-    // Order: Timestamp | Gender | Student ID | Name | Email | Phone | Facebook | Major | Year | Semester | Skills
+    // Order: Timestamp | Gender | Student ID | Name | Email | Phone | Facebook | Major | Semester | Skills
     const row = [
       data.timestamp,
       data.gender,
@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
       `'${data.phone}`,
       data.facebook,
       data.major,
-      data.year,
       data.semester,
       data.skills.join(', ')
     ];

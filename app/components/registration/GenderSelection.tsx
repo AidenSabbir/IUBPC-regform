@@ -4,11 +4,11 @@ import { FormStepProps } from '@/app/types/registration';
 import NavigationButtons from '../ui/NavigationButtons';
 import { genderSchema } from '@/app/lib/validation';
 
-const GenderSelection: React.FC<FormStepProps> = ({ 
-  formData, 
-  updateFormData, 
-  nextStep, 
-  prevStep 
+const GenderSelection: React.FC<FormStepProps> = ({
+  formData,
+  updateFormData,
+  nextStep,
+  prevStep
 }) => {
   const [error, setError] = React.useState<string | null>(null);
 
@@ -34,7 +34,7 @@ const GenderSelection: React.FC<FormStepProps> = ({
 
       <div className="flex flex-row gap-8 md:gap-16 justify-center items-end mb-12">
         {/* Female Character */}
-        <div 
+        <div
           onClick={() => handleGenderSelect('female')}
           className={`
             cursor-pointer flex flex-col items-center gap-4
@@ -42,12 +42,12 @@ const GenderSelection: React.FC<FormStepProps> = ({
           `}
         >
           <div className={`
-            relative w-[160px] h-[160px] md:w-[240px] md:h-[240px] 
+            relative w-[100px] h-[100px] 
             ${formData.gender === 'female' ? 'border-4 border-[#FF3FB4]' : 'border-transparent'}
           `}>
-             <Image 
-              src="/female.png" 
-              alt="Female Character" 
+            <Image
+              src="/female_v2.png"
+              alt="Female Character"
               fill
               className="object-contain pixel-card"
               priority
@@ -59,7 +59,7 @@ const GenderSelection: React.FC<FormStepProps> = ({
         </div>
 
         {/* Male Character */}
-        <div 
+        <div
           onClick={() => handleGenderSelect('male')}
           className={`
             cursor-pointer flex flex-col items-center gap-4
@@ -67,12 +67,12 @@ const GenderSelection: React.FC<FormStepProps> = ({
           `}
         >
           <div className={`
-            relative w-[160px] h-[160px] md:w-[240px] md:h-[240px] 
+            relative w-[100px] h-[100px] 
             ${formData.gender === 'male' ? 'border-4 border-[#00FFFF]' : 'border-transparent'}
           `}>
-            <Image 
-              src="/male.png" 
-              alt="Male Character" 
+            <Image
+              src="/male_v2.png"
+              alt="Male Character"
               fill
               className="object-contain pixel-card"
               priority
@@ -90,9 +90,9 @@ const GenderSelection: React.FC<FormStepProps> = ({
         </div>
       )}
 
-      <NavigationButtons 
-        onBack={prevStep} 
-        onNext={handleNext} 
+      <NavigationButtons
+        onBack={prevStep}
+        onNext={handleNext}
         disableNext={!formData.gender}
       />
     </div>

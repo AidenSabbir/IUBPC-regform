@@ -26,10 +26,10 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           type="button" 
           onClick={onBack}
           variant="secondary"
-          className="flex-1 max-w-[80px] flex items-center justify-center"
+          className="flex-1 max-w-[80px] flex items-center justify-center sound-click-btn"
           aria-label="Back"
         >
-          <ArrowLeftIcon className="w-6 h-6" />
+          <ArrowLeftIcon className="w-6 h-6 pointer-events-none" />
         </PixelButton>
       ) : (
         <div className="flex-1 max-w-[80px]"></div>
@@ -39,13 +39,15 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         type="button" 
         onClick={onNext}
         disabled={disableNext || loading}
-        className="flex-1 max-w-[80px] flex items-center justify-center"
+        className={`flex-1 flex items-center justify-center sound-click-btn ${nextLabel === 'NEXT' ? 'max-w-[80px]' : ''}`}
         aria-label="Next"
       >
         {loading ? (
           '...'
+        ) : nextLabel === 'NEXT' ? (
+          <ArrowRightIcon className="w-6 h-6 pointer-events-none" />
         ) : (
-          <ArrowRightIcon className="w-6 h-6" />
+          nextLabel
         )}
       </PixelButton>
     </div>

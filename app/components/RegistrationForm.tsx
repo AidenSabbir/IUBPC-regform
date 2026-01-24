@@ -8,8 +8,12 @@ import GenderSelection from './registration/GenderSelection';
 import PersonalInfo from './registration/PersonalInfo';
 import AcademicInfo from './registration/AcademicInfo';
 import SkillsSelection from './registration/SkillsSelection';
+import InventorySelection from './registration/InventorySelection';
+import CharacterShowcase from './registration/CharacterShowcase';
 import ReviewSubmit from './registration/ReviewSubmit';
 import SuccessScreen from './registration/SuccessScreen';
+import EquipmentIcons from './ui/EquipmentIcons';
+import AudioController from './ui/AudioController';
 
 const STORAGE_KEY = 'iubpc-reg-data-v1';
 
@@ -21,9 +25,11 @@ const INITIAL_DATA: RegistrationData = {
   phone: '',
   facebook: '',
   major: '',
-  year: '',
   semester: '',
   skills: [],
+  equipment: [],
+  portion: '',
+  specialItem: '',
   timestamp: ''
 };
 
@@ -39,7 +45,8 @@ const RegistrationForm = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setFormData(parsed);
+        // Merge with INITIAL_DATA to ensure new fields (like equipment, portion) exist
+        setFormData({ ...INITIAL_DATA, ...parsed });
       } catch (e) {
         console.error('Failed to parse saved data');
       }
@@ -59,7 +66,7 @@ const RegistrationForm = () => {
   };
 
   const nextStep = () => {
-    if (step === 5) {
+    if (step === 6) { // Review is now step 6
       submitForm();
     } else {
       setStep(prev => prev + 1);
@@ -81,6 +88,8 @@ const RegistrationForm = () => {
   const submitForm = async () => {
     setIsSubmitting(true);
     try {
+      // Exclude local-only fields (portion, specialItem) from API payload if needed
+      // The API route validation will filter them out automatically via safeParse
       const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
@@ -107,7 +116,7 @@ const RegistrationForm = () => {
         throw new Error(result.error || 'Submission failed');
       }
 
-      setStep(6); // Success
+      setStep(7); // Go to Character Showcase instead of Success
       localStorage.removeItem(STORAGE_KEY);
     } catch (error: any) {
       alert(error.message || 'Failed to submit registration. Please try again.');
@@ -123,7 +132,7 @@ const RegistrationForm = () => {
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8 relative">
 
       {/* Persistent Logo for steps > 0 */}
-      {step > 0 && step < 6 && (
+      {step > 0 && step < 8 && (
         <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
           <div className="relative w-10 h-10 md:w-12 md:h-12">
             <Image
@@ -139,12 +148,16 @@ const RegistrationForm = () => {
         </div>
       )}
 
-      {/* Step Indicator */}
-      {step > 0 && step < 6 && (
+      {/* Audio Controller */}
+      <AudioController gameStarted={step > 0} />
+
+      {/* Equipment Display - HIDDEN on Showcase (Step 7) */}
+      {step > 0 && step < 7 && (
         <div className="absolute top-4 right-4 z-20">
-          <span className="text-[#00FF00] text-[10px] md:text-xs bg-black/50 px-3 py-1 border border-[#00FF00] rounded">
-            LEVEL {step}/5
-          </span>
+          <EquipmentIcons 
+            equipment={formData.equipment} 
+            gender={formData.gender}
+          />
         </div>
       )}
 
@@ -153,12 +166,6 @@ const RegistrationForm = () => {
         <div className="bg-transparent p-6 md:p-10 w-full max-w-2xl relative">
 
           <div className="relative z-10">
-            {/* Decorative Corner Pixels for the container */}
-            {/* <div className="absolute -top-7 -left-7 w-4 h-4 bg-white"></div>
-            <div className="absolute -top-7 -right-7 w-4 h-4 bg-white"></div>
-            <div className="absolute -bottom-7 -left-7 w-4 h-4 bg-white"></div>
-            <div className="absolute -bottom-7 -right-7 w-4 h-4 bg-white"></div> */}
-
             {step === 0 && <StartScreen onStart={() => setStep(1)} />}
 
             {step === 1 && (
@@ -198,6 +205,15 @@ const RegistrationForm = () => {
             )}
 
             {step === 5 && (
+              <InventorySelection
+                formData={formData}
+                updateFormData={updateFormData}
+                nextStep={nextStep}
+                prevStep={prevStep}
+              />
+            )}
+
+            {step === 6 && (
               <ReviewSubmit
                 formData={formData}
                 updateFormData={updateFormData}
@@ -207,7 +223,14 @@ const RegistrationForm = () => {
               />
             )}
 
-            {step === 6 && (
+            {step === 7 && (
+              <CharacterShowcase
+                formData={formData}
+                nextStep={() => setStep(8)}
+              />
+            )}
+
+            {step === 8 && (
               <SuccessScreen onReset={resetForm} />
             )}
           </div>

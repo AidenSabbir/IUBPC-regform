@@ -1,4 +1,4 @@
-export type RegistrationStep = 
+export type RegistrationStep =
   | 'START'
   | 'GENDER'
   | 'PERSONAL'
@@ -15,15 +15,21 @@ export interface RegistrationData {
   phone: string;
   facebook: string;
   major: string;
-  year: string;
   semester: string;
   skills: string[];
+  equipment: EquipmentItem[];
+  portion: PortionItem | '';
+  specialItem: SpecialItem | '';
   timestamp: string;
 }
 
-export type Skill = 'cp' | 'decor' | 'game_dev' | 'media' | 'pr' | 'web_dev' | 'None';
+export type EquipmentItem = 'armor' | 'mask' | 'sowrd' | 'sheild';
+export type PortionItem = 'Pcontrol' | 'Pimmortality' | 'Pinvisibility';
+export type SpecialItem = 'Sdragon' | 'Shat' | 'Sspellbook';
 
-export const ALL_SKILLS: Skill[] = ['cp', 'decor', 'game_dev', 'media', 'pr', 'web_dev', 'None'];
+export type Skill = 'cp' | 'decor' | 'game_dev' | 'media' | 'pr' | 'web_dev' | 'content' | 'None';
+
+export const ALL_SKILLS: Skill[] = ['cp', 'decor', 'game_dev', 'media', 'pr', 'web_dev', 'content', 'None'];
 
 export interface FormStepProps {
   formData: RegistrationData;
