@@ -27,7 +27,7 @@ const INITIAL_DATA: RegistrationData = {
   phone: '',
   facebook: '',
   major: '',
-  semester: '',
+  semester: null,
   skills: [],
   equipment: [],
   portion: '',
@@ -161,8 +161,8 @@ const RegistrationForm = () => {
       {/* Equipment Display - HIDDEN on Showcase (Step 7) */}
       {step > 0 && step < 7 && (
         <div className="absolute top-4 right-4 z-20">
-          <EquipmentIcons 
-            equipment={formData.equipment} 
+          <EquipmentIcons
+            equipment={formData.equipment}
             gender={formData.gender}
           />
         </div>

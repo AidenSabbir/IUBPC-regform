@@ -15,7 +15,7 @@ export interface RegistrationData {
   phone: string;
   facebook: string;
   major: string;
-  semester: string;
+  semester: number | null;
   skills: string[];
   equipment: EquipmentItem[];
   portion: PortionItem | '';

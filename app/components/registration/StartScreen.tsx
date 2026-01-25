@@ -25,7 +25,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
       </div>
 
       <div className="mt-4 flex flex-col items-center text-center">
-        <p className="text-[#00FFFF] text-sm tracking-widest uppercase mb-2">
+        <p className="text-[#00FFFF] text-2xl tracking-widest uppercase mb-2">
           Registration Form
         </p>
         <PixelButton

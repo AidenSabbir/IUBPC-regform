@@ -20,10 +20,10 @@ const AcademicInfo: React.FC<FormStepProps> = ({
     handleSubmit,
     formState: { errors }
   } = useForm<AcademicInfoForm>({
-    resolver: zodResolver(academicInfoSchema),
+    resolver: zodResolver(academicInfoSchema) as any,
     defaultValues: {
       major: formData.major,
-      semester: formData.semester
+      semester: formData.semester === null ? undefined : formData.semester
     },
     mode: 'onChange'
   });
@@ -53,8 +53,10 @@ const AcademicInfo: React.FC<FormStepProps> = ({
         <div className="mt-4">
           <PixelInput
             label="Semester"
+            type='number'
+            max={16}
             placeholder="Which semester are you in?"
-            {...register('semester')}
+            {...register('semester', { valueAsNumber: true })}
             error={errors.semester}
           />
         </div>

@@ -22,8 +22,9 @@ export const personalInfoSchema = z.object({
 export const academicInfoSchema = z.object({
   major: z.string()
     .min(1, "Major is required"),
-  semester: z.string()
-    .min(1, "Semester is required")
+  semester: z.number().nullable().refine((val) => val !== null, {
+    message: "Semester is required"
+  }),
 });
 
 export const skillsSchema = z.object({

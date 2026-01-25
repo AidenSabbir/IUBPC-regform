@@ -32,7 +32,7 @@ const ReviewSubmit: React.FC<FormStepProps> = ({
           <DataRow label="Phone" value={`+88${formData.phone}`} />
           <DataRow label="Facebook" value={formData.facebook} />
           <DataRow label="Major" value={formData.major} />
-          <DataRow label="Semester" value={formData.semester} />
+          <DataRow label="Semester" value={formData.semester?.toString() || ''} />
           <DataRow label="Skills" value={formData.skills} />
         </div>
       </div>
