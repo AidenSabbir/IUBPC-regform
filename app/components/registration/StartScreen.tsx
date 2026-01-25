@@ -32,7 +32,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
           className="animate-pulse start-game-btn"
           onClick={onStart}
         >
-          START GAME
+          START
         </PixelButton>
       </div>
     </div>
