@@ -75,7 +75,7 @@ const PersonalInfo: React.FC<FormStepProps> = ({
           placeholder="01XXXXXXXXX"
           {...register('phone')}
           error={errors.phone}
-          prefix="BDT"
+          prefix="+88"
         />
 
         <PixelInput
