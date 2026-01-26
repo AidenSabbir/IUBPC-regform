@@ -49,40 +49,6 @@ const CharacterShowcase: React.FC<CharacterShowcaseProps> = ({
 
         {/* Selected Inventory Display (Horizontal Row at Bottom) */}
         <div className="flex gap-6 w-full justify-center flex-wrap items-center -mt-23">
-
-          {/* Portion */}
-          {formData.portion && (
-            <div className="flex flex-col items-center gap-1 group">
-              <div className="relative w-16 h-16 bg-black/60 rounded-lg border-2 border-[#00FFFF] shadow-[0_0_15px_rgba(0,255,255,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
-                <Image
-                  src={`/${formData.portion}.png`}
-                  alt="Portion"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-[10px] text-[#00FFFF] bg-black/70 px-2 py-0.5 rounded border border-[#00FFFF]/30">
-                {getItemName(formData.portion)}
-              </span>
-            </div>
-          )}
-
-          {/* Special Item */}
-          {formData.specialItem && (
-            <div className="flex flex-col items-center gap-1 group">
-              <div className="relative w-16 h-16 bg-black/60 rounded-lg border-2 border-[#FF3FB4] shadow-[0_0_15px_rgba(255,63,180,0.3)] p-2 group-hover:scale-110 transition-transform duration-300">
-                <Image
-                  src={`/${formData.specialItem}.png`}
-                  alt="Special Item"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-[10px] text-[#FF3FB4] bg-black/70 px-2 py-0.5 rounded border border-[#FF3FB4]/30">
-                {getItemName(formData.specialItem)}
-              </span>
-            </div>
-          )}
           {
             formData.skills && formData.skills.map((skill, index) => (
               <div key={index} className="flex flex-col items-center gap-1 group">

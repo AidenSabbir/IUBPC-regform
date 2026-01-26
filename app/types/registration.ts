@@ -18,14 +18,10 @@ export interface RegistrationData {
   semester: number | null;
   skills: string[];
   equipment: EquipmentItem[];
-  portion: PortionItem | '';
-  specialItem: SpecialItem | '';
   timestamp: string;
 }
 
 export type EquipmentItem = 'armor' | 'mask' | 'sowrd' | 'sheild';
-export type PortionItem = 'Pcontrol' | 'Pimmortality' | 'Pinvisibility';
-export type SpecialItem = 'Sdragon' | 'Switch_hat' | 'Sspellbook';
 
 export type Skill = 'cp' | 'decor' | 'game_dev' | 'media' | 'pr' | 'web_dev' | 'content' | 'None';
 

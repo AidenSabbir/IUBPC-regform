@@ -10,7 +10,6 @@ import GenderSelection from './registration/GenderSelection';
 import PersonalInfo from './registration/PersonalInfo';
 import AcademicInfo from './registration/AcademicInfo';
 import SkillsSelection from './registration/SkillsSelection';
-import InventorySelection from './registration/InventorySelection';
 import CharacterShowcase from './registration/CharacterShowcase';
 import ReviewSubmit from './registration/ReviewSubmit';
 import SuccessScreen from './registration/SuccessScreen';
@@ -30,8 +29,6 @@ const INITIAL_DATA: RegistrationData = {
   semester: null,
   skills: [],
   equipment: [],
-  portion: '',
-  specialItem: '',
   timestamp: ''
 };
 
@@ -48,7 +45,7 @@ const RegistrationForm = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Merge with INITIAL_DATA to ensure new fields (like equipment, portion) exist
+        // Merge with INITIAL_DATA to ensure new fields (like equipment) exist
         setFormData({ ...INITIAL_DATA, ...parsed });
       } catch (e) {
         console.error('Failed to parse saved data');
@@ -69,7 +66,7 @@ const RegistrationForm = () => {
   };
 
   const nextStep = () => {
-    if (step === 6) { // Review is now step 6
+    if (step === 5) { // Review is now step 5
       submitForm();
     } else {
       setStep(prev => prev + 1);
@@ -91,7 +88,7 @@ const RegistrationForm = () => {
   const submitForm = async () => {
     setIsSubmitting(true);
     try {
-      // Exclude local-only fields (portion, specialItem) from API payload if needed
+      // Exclude local-only fields from API payload if needed
       // The API route validation will filter them out automatically via safeParse
       const response = await fetch('/api/submit', {
         method: 'POST',
@@ -119,7 +116,7 @@ const RegistrationForm = () => {
         throw new Error(result.error || 'Submission failed');
       }
 
-      setStep(7); // Go to Character Showcase instead of Success
+      setStep(6); // Go to Character Showcase instead of Success
       localStorage.removeItem(STORAGE_KEY);
     } catch (error: any) {
       alert(error.message || 'Failed to submit registration. Please try again.');
@@ -139,7 +136,7 @@ const RegistrationForm = () => {
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative">
 
       {/* Persistent Logo for steps > 0 */}
-      {step > 0 && step < 8 && (
+      {step > 0 && step < 7 && (
         <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
           <div className="relative w-12 h-12">
             <Image
@@ -158,8 +155,8 @@ const RegistrationForm = () => {
       {/* Audio Controller */}
       <AudioController gameStarted={!showSplash} />
 
-      {/* Equipment Display - HIDDEN on Showcase (Step 7) */}
-      {step > 0 && step < 7 && (
+      {/* Equipment Display - HIDDEN on Showcase (Step 6) */}
+      {step > 0 && step < 6 && (
         <div className="absolute top-4 right-4 z-20">
           <EquipmentIcons
             equipment={formData.equipment}
@@ -212,15 +209,6 @@ const RegistrationForm = () => {
             )}
 
             {step === 5 && (
-              <InventorySelection
-                formData={formData}
-                updateFormData={updateFormData}
-                nextStep={nextStep}
-                prevStep={prevStep}
-              />
-            )}
-
-            {step === 6 && (
               <ReviewSubmit
                 formData={formData}
                 updateFormData={updateFormData}
@@ -230,14 +218,14 @@ const RegistrationForm = () => {
               />
             )}
 
-            {step === 7 && (
+            {step === 6 && (
               <CharacterShowcase
                 formData={formData}
-                nextStep={() => setStep(8)}
+                nextStep={() => setStep(7)}
               />
             )}
 
-            {step === 8 && (
+            {step === 7 && (
               <SuccessScreen onReset={resetForm} />
             )}
           </div>
