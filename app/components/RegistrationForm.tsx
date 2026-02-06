@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { RegistrationData } from '@/app/types/registration';
 import SplashScreen from './registration/SplashScreen';
+import RegistrationClosedScreen from './registration/RegistrationClosedScreen';
 import StartScreen from './registration/StartScreen';
 import GenderSelection from './registration/GenderSelection';
 
@@ -127,6 +128,12 @@ const RegistrationForm = () => {
   };
 
   if (!isLoaded) return null; // Prevent hydration mismatch
+
+  const isRegistrationOpen = process.env.NEXT_PUBLIC_REG_STATUS !== 'false';
+
+  if (!isRegistrationOpen) {
+    return <RegistrationClosedScreen />;
+  }
 
   if (showSplash) {
     return <SplashScreen onComplete={() => setShowSplash(false)} />;
