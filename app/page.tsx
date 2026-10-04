@@ -6,8 +6,8 @@ export default async function Page() {
 
   if (!session) {
     // Internal path or absolute external URL
-    redirect('/login'); 
-    // or: redirect('https://join.iubpc.org');
+    //redirect('/login'); 
+    redirect('https://join.iubpc.org');
   }
 
   return <div>Dashboard Content</div>;
