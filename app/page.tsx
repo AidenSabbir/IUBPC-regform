@@ -1,9 +1,14 @@
-import RegistrationForm from "./components/RegistrationForm";
+// app/dashboard/page.tsx
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <div className="w-full">
-      <RegistrationForm />
-    </div>
-  );
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session) {
+    // Internal path or absolute external URL
+    redirect('/login'); 
+    // or: redirect('https://join.iubpc.org');
+  }
+
+  return <div>Dashboard Content</div>;
 }
